@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int findKthPositive(int arr[], int n, int k) {
+    int current = 1;  // Start from positive integer 1
+    int index = 0;
+
+    while (k > 0) {
+        // If current number is missing
+        if (index >= n || arr[index] != current) {
+            k--;        // Found one missing
+        } else {
+            index++;    // Move in array
+        }
+        current++;      // Check next number
+    }
+
+    return current - 1; // This is the kth missing number
+}
+
+int main() {
+    int arr1[] = {2, 3, 4, 7, 11};
+    int k1 = 5;
+    int n1 = 5;
+
+    int arr2[] = {1, 2, 3, 4};
+    int k2 = 2;
+    int n2 = 4;
+
+    printf("Output 1: %d\n", findKthPositive(arr1, n1, k1));  // Expected 9
+    printf("Output 2: %d\n", findKthPositive(arr2, n2, k2));  // Expected 6
+
+    return 0;
+}
