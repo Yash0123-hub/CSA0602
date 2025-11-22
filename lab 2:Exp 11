@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+struct Point {
+    int x, y;
+};
+
+// Function to check orientation
+int orientation(struct Point a, struct Point b, struct Point c) {
+    int val = (b.y - a.y) * (c.x - b.x) -
+              (b.x - a.x) * (c.y - b.y);
+    if (val == 0) return 0;      // collinear
+    return (val > 0) ? 1 : 2;    // clockwise or counter-clockwise
+}
+
+int main() {
+    struct Point p[] = {{1,1},{4,6},{8,1},{0,0},{3,3}};
+    int n = 5;
+
+    printf("Convex Hull: ");
+
+    // Find the leftmost point
+    int l = 0;
+    for(int i=1;i<n;i++)
+        if(p[i].x < p[l].x)
+            l = i;
+
+    int curr = l, next;
+
+    printf("[");
+    do {
+        printf("(%d, %d)", p[curr].x, p[curr].y);
+        next = (curr + 1) % n;
+
+        for(int i=0;i<n;i++) {
+            if(orientation(p[curr], p[i], p[next]) == 2)
+                next = i;
+        }
+        curr = next;
+        if(curr != l) printf(", ");
+    } while(curr != l);
+
+    printf("]\n");
+    return 0;
+}
