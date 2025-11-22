@@ -1,0 +1,65 @@
+#include <stdio.h>
+
+void printArray(int a[], int n) {
+    for(int i = 0; i < n; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+}
+
+int partition(int a[], int low, int high, int n) {
+    int mid = (low + high) / 2;
+    int pivot = a[mid];
+
+    int i = low;
+    int j = high;
+
+    while (i <= j) {
+        while (a[i] < pivot)
+            i++;
+        while (a[j] > pivot)
+            j--;
+
+        if (i <= j) {
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    // Show array after partitioning
+    printf("After partition (pivot = %d): ", pivot);
+    printArray(a, n);
+
+    return i;
+}
+
+void quickSort(int a[], int low, int high, int n) {
+    if (low < high) {
+        int index = partition(a, low, high, n);
+
+        if (low < index - 1)
+            quickSort(a, low, index - 1, n);
+
+        if (index < high)
+            quickSort(a, index, high, n);
+    }
+}
+
+int main() {
+
+    // Test Case 1
+    int a[] = {19,72,35,46,58,91,22,31};
+    int n = 8;
+
+    printf("Original Array: ");
+    printArray(a, n);
+
+    quickSort(a, 0, n - 1, n);
+
+    printf("Final Sorted Array: ");
+    printArray(a, n);
+
+    return 0;
+}
