@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int a[] = {3,9,14,19,25,31,42,47,53};
+    int n = 9;
+    int key = 31;
+
+    int low = 0, high = n - 1, mid, step = 1;
+    int found = 0;
+
+    printf("Array: ");
+    for(int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\nSearch Key: %d\n\n", key);
+
+    while (low <= high) {
+        mid = (low + high) / 2;
+
+        printf("Step %d:\n", step);
+        printf("Low index = %d, High index = %d\n", low+1, high+1);
+        printf("Mid calculation: (%d + %d) / 2 = %d\n", low+1, high+1, mid+1);
+        printf("Mid value = %d\n\n", a[mid]);
+
+        if (a[mid] == key) {
+            printf("✅ Element found at position: %d\n", mid + 1);
+            found = 1;
+            break;
+        } 
+        else if (a[mid] < key) {
+            low = mid + 1;
+        } 
+        else {
+            high = mid - 1;
+        }
+
+        step++;
+    }
+
+    if (!found) {
+        printf("❌ Element not found\n");
+    }
+
+    return 0;
+}
